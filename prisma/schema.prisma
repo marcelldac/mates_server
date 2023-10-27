@@ -9,3 +9,18 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id String @default(uuid()) @unique
+  email String @unique
+  password String
+  name String?
+  area Area? @relation(fields: [areaId], references: [id])
+  areaId String?
+}
+
+model Area {
+  id String @default(uuid()) @unique
+  name String @unique
+  users User[]
+}
